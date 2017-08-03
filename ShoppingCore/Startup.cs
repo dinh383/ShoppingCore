@@ -13,6 +13,8 @@ using Microsoft.Extensions.Configuration;
 using ShoppingCore.Data.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using ShoppingCore.Infrastructure.Interfaces;
+using ShoppingCore.Data.IRepositories;
+using ShoppingCore.Data.EF.Repositories;
 
 namespace ShoppingCore
 {
@@ -53,6 +55,7 @@ namespace ShoppingCore
                .AddDefaultTokenProviders();
 
             services.AddScoped(typeof(IRepository<,>), typeof(EFRepository<,>));
+            services.AddTransient(typeof(ICategoryRepository), typeof(CategoryRepository));
 
         }
 
