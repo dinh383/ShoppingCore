@@ -15,7 +15,7 @@ namespace ShoppingCore.Data.EF
     /// Serves as a generic base class for concrete repositories to support basic CRUD oprations on data in the system.
     /// </summary>
     /// <typeparam name="T">The type of entity this repository works with. Must be a class inheriting DomainEntity.</typeparam>
-    public class EFRepository<T> : IRepository<T, int>, IDisposable where T : DomainEntity<int>
+    public class EFRepository<T, K> : IRepository<T, K>, IDisposable where T : DomainEntity<K>
     {
         protected readonly AppDbContext _dbContext;
 
@@ -30,9 +30,9 @@ namespace ShoppingCore.Data.EF
         /// <param name="id">The unique ID of the item in the database.</param>
         /// <param name="includeProperties">An expression of additional properties to eager load. For example: x => x.SomeCollection, x => x.SomeOtherCollection.</param>
         /// <returns>The requested item when found, or null otherwise.</returns>
-        public virtual T FindById(int id, params Expression<Func<T, object>>[] includeProperties)
+        public virtual T FindById(K id, params Expression<Func<T, object>>[] includeProperties)
         {
-            return FindAll(includeProperties).SingleOrDefault(x => x.Id == id);
+            return FindAll(includeProperties).SingleOrDefault(x => x.Id.Equals(id));
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace ShoppingCore.Data.EF
         /// Removes an entity from the underlying DbContext. Calls <see cref="FindById" /> to resolve the item.
         /// </summary>
         /// <param name="id">The ID of the entity that should be removed.</param>
-        public virtual void Remove(int id)
+        public virtual void Remove(K id)
         {
             Remove(FindById(id));
         }

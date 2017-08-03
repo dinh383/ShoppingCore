@@ -4,7 +4,13 @@ using System.Text;
 
 namespace ShoppingCore.Data.Enums
 {
-    class PaymentMethod
+    public enum PaymentMethod
     {
+        Cash,
+        OnlineBanking,
+        Visa,
+        MasterCash,
+        Paypal,
+        ThirdParty
     }
 }

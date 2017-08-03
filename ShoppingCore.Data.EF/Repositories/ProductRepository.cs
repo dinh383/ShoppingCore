@@ -7,7 +7,7 @@ using System.Text;
 
 namespace ShoppingCore.Data.EF.Repositories
 {
-    public class ProductRepository : EFRepository<Product>, IProductRepository
+    public class ProductRepository : EFRepository<Product,int>, IProductRepository
     {
         public ProductRepository(AppDbContext dbContext) : base(dbContext)
         {

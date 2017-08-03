@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using ShoppingCore.Data.EF.Configuration;
 using ShoppingCore.Data.Entities;
 
 namespace ShoppingCore.Data.EF
@@ -26,6 +27,11 @@ namespace ShoppingCore.Data.EF
 
             modelBuilder.Entity<IdentityUserToken<string>>().ToTable("AppUserTokens")
                .HasKey(x => new { x.UserId });
+
+            //Config
+            new ProductConfig(modelBuilder.Entity<Product>());
+            new AppUserConfig(modelBuilder.Entity<AppUser>());
+
         }
 
         public DbSet<Product> Products { get; set; }

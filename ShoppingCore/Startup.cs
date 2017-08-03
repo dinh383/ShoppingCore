@@ -10,6 +10,9 @@ using Microsoft.Extensions.Logging;
 using ShoppingCore.Data.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using ShoppingCore.Data.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using ShoppingCore.Infrastructure.Interfaces;
 
 namespace ShoppingCore
 {
@@ -40,24 +43,45 @@ namespace ShoppingCore
         {
             services.AddMvc();
             services.AddSession();
-
             // Add framework services.
             services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("AppDbConnection"), 
+                options.UseSqlServer(Configuration.GetConnectionString("AppDbConnection"),
                 b => b.MigrationsAssembly("ShoppingCore.Data.EF")));
+
+            services.AddIdentity<AppUser, IdentityRole>()
+               .AddEntityFrameworkStores<AppDbContext>()
+               .AddDefaultTokenProviders();
+
+            services.AddScoped(typeof(IRepository<,>), typeof(EFRepository<,>));
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, AppDbContext context)
         {
-            loggerFactory.AddConsole();
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddDebug();
 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+            }
+
             app.UseSession();
+            app.UseStaticFiles();
+            app.UseMvc(config =>
+            {
+                config.MapRoute(
+                    name: "Default",
+                    template: "{controller}/{action}/{id?}",
+                    defaults: new { controller = "Home", action = "Index" }
+                    );
+            });
+            DbInitializer.Initialize(context);
         }
     }
 }

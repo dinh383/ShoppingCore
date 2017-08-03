@@ -12,6 +12,8 @@ namespace ShoppingCore.Data.EF.Configuration
         public AppUserConfig(EntityTypeBuilder<AppUser> entityBuilder)
         {
             entityBuilder.ToTable("AppUsers");
+            entityBuilder.Property(x => x.FullName).IsRequired().HasMaxLength(128);
+
         }
     }
 }
