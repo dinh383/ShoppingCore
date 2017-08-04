@@ -10,8 +10,8 @@ using ShoppingCore.Data.Enums;
 namespace ShoppingCore.Data.EF.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20170803101227_Initital")]
-    partial class Initital
+    [Migration("20170804064731_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -199,7 +199,8 @@ namespace ShoppingCore.Data.EF.Migrations
 
                     b.Property<string>("LanguageId");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.Property<string>("OwnerId");
 

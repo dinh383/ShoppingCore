@@ -54,6 +54,7 @@ namespace ShoppingCore
                .AddEntityFrameworkStores<AppDbContext>()
                .AddDefaultTokenProviders();
 
+            services.AddTransient(typeof(IUnitOfWork), typeof(EFUnitOfWork));
             services.AddScoped(typeof(IRepository<,>), typeof(EFRepository<,>));
             services.AddTransient(typeof(ICategoryRepository), typeof(CategoryRepository));
 

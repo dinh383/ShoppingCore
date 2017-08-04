@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace ShoppingCore.Data.EF.Migrations
 {
-    public partial class Initital : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -224,7 +224,7 @@ namespace ShoppingCore.Data.EF.Migrations
                     Description = table.Column<string>(nullable: true),
                     DisplayLayout = table.Column<int>(nullable: false),
                     LanguageId = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: false),
                     OwnerId = table.Column<string>(nullable: true),
                     SeoAlias = table.Column<string>(nullable: true),
                     SeoDescription = table.Column<string>(nullable: true),

@@ -198,7 +198,8 @@ namespace ShoppingCore.Data.EF.Migrations
 
                     b.Property<string>("LanguageId");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.Property<string>("OwnerId");
 
